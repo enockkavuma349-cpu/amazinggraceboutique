@@ -107,10 +107,10 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
           <div>
             <h4 className="text-sm font-semibold text-foreground">Shop</h4>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li><Link to="/browse" search={{ category: "Clothes" }}>Clothes</Link></li>
-              <li><Link to="/browse" search={{ category: "Watches" }}>Watches</Link></li>
-              <li><Link to="/browse" search={{ category: "Perfumes" }}>Perfumes</Link></li>
-              <li><Link to="/browse" search={{ category: "Jewelry" }}>Jewelry</Link></li>
+              <li><Link to="/browse" search={{ category: "Clothes", q: "", page: 1 }}>Clothes</Link></li>
+              <li><Link to="/browse" search={{ category: "Watches", q: "", page: 1 }}>Watches</Link></li>
+              <li><Link to="/browse" search={{ category: "Perfumes", q: "", page: 1 }}>Perfumes</Link></li>
+              <li><Link to="/browse" search={{ category: "Jewelry", q: "", page: 1 }}>Jewelry</Link></li>
             </ul>
           </div>
           <div>

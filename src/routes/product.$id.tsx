@@ -48,7 +48,7 @@ function ProductPage() {
     <SiteLayout>
       <div className="mx-auto max-w-6xl px-4 py-8">
         <nav className="text-xs text-muted-foreground">
-          <Link to="/">Home</Link> / <Link to="/browse" search={{ category: product.category }}>{product.category}</Link> /{" "}
+          <Link to="/">Home</Link> / <Link to="/browse" search={{ category: product.category, q: "", page: 1 }}>{product.category}</Link> /{" "}
           <span className="text-foreground">{product.subcategory}</span>
         </nav>
 

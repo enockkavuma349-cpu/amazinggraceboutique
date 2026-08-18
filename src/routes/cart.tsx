@@ -38,7 +38,7 @@ function CartPage() {
             Thank you for shopping with Amazing Grace Boutique. Our team will call you shortly to confirm
             delivery details.
           </p>
-          <Link to="/browse" className="mt-6 inline-block rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground">
+          <Link to="/browse" search={{ category: "All", q: "", page: 1 }} className="mt-6 inline-block rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground">
             Continue shopping
           </Link>
         </div>
@@ -54,7 +54,7 @@ function CartPage() {
         {cartDetailed.length === 0 ? (
           <div className="mt-10 rounded-lg border border-border bg-card p-12 text-center">
             <p className="text-muted-foreground">Your cart is empty.</p>
-            <Link to="/browse" className="mt-4 inline-block rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground">
+            <Link to="/browse" search={{ category: "All", q: "", page: 1 }} className="mt-4 inline-block rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground">
               Start browsing
             </Link>
           </div>

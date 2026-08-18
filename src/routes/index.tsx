@@ -52,6 +52,7 @@ function HomePage() {
             <div className="mt-6 flex flex-wrap gap-3">
               <Link
                 to="/browse"
+                search={{ category: "All", q: "", page: 1 }}
                 className="rounded-md bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground hover:opacity-90"
               >
                 Browse the shop
