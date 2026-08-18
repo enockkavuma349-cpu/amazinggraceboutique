@@ -47,7 +47,7 @@ function buildCatalog(): Product[] {
   for (const category of CATEGORIES) {
     const cfg = BLUEPRINT[category];
     for (let i = 0; i < cfg.count; i++) {
-      const subcategory = cfg.subs[i % cfg.subs.length];
+      const subcategory = cfg.subs[i % cfg.subs.length] as string;
       const n = i + 1;
       items.push({
         id: `${category.toLowerCase()}-${n}`,

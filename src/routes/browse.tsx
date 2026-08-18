@@ -5,15 +5,15 @@ import { ProductCard } from "@/components/shop/ProductCard";
 import { CATEGORIES, type Category } from "@/lib/catalog";
 import { useShop } from "@/lib/shop-store";
 
-type BrowseSearch = { category?: Category | "All"; q?: string; page?: number };
+type BrowseSearch = { category: Category | "All"; q: string; page: number };
 
 export const Route = createFileRoute("/browse")({
   validateSearch: (search: Record<string, unknown>): BrowseSearch => ({
-    category: (CATEGORIES as string[]).includes(String(search.category))
-      ? (search.category as Category)
+    category: (CATEGORIES as string[]).includes(String(search["category"]))
+      ? (search["category"] as Category)
       : "All",
-    q: typeof search.q === "string" && search.q ? search.q : undefined,
-    page: Number(search.page) > 1 ? Number(search.page) : undefined,
+    q: typeof search["q"] === "string" ? (search["q"] as string) : "",
+    page: Number(search["page"]) > 1 ? Number(search["page"]) : 1,
   }),
   head: () => ({
     meta: [
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/browse")({
 const PER_PAGE = 24;
 
 function BrowsePage() {
-  const { category = "All", q, page = 1 } = Route.useSearch();
+  const { category, q, page } = Route.useSearch();
   const navigate = Route.useNavigate();
   const { products } = useShop();
   const [term, setTerm] = React.useState(q ?? "");
@@ -71,7 +71,7 @@ function BrowsePage() {
           className="mt-6 flex flex-wrap gap-3"
           onSubmit={(e) => {
             e.preventDefault();
-            navigate({ search: { category, q: term || undefined, page: undefined } });
+            navigate({ search: { category, q: term, page: 1 } });
           }}
         >
           <input
@@ -99,7 +99,7 @@ function BrowsePage() {
             <Link
               key={c}
               to="/browse"
-              search={{ category: c, q, page: undefined }}
+              search={{ category: c, q, page: 1 }}
               className={`rounded-full border px-4 py-1.5 text-sm ${
                 category === c
                   ? "border-transparent bg-accent text-accent-foreground"
@@ -127,7 +127,7 @@ function BrowsePage() {
               <Link
                 key={n}
                 to="/browse"
-                search={{ category, q, page: n === 1 ? undefined : n }}
+                search={{ category, q, page: n }}
                 className={`rounded-md border px-3 py-1.5 text-sm ${
                   n === current
                     ? "border-transparent bg-accent text-accent-foreground"
