@@ -70,7 +70,7 @@ function HomePage() {
               <Link
                 key={category}
                 to="/browse"
-                search={{ category }}
+                search={{ category, q: "", page: 1 }}
                 className="group relative flex h-36 flex-col justify-end overflow-hidden rounded-lg border border-border bg-card p-4 transition-shadow hover:shadow-lg sm:h-44"
               >
                 <span className="font-serif text-xl font-bold text-foreground">{category}</span>
@@ -97,7 +97,7 @@ function HomePage() {
         <section key={category} className="mx-auto max-w-7xl px-4 py-6">
           <div className="mb-4 flex items-end justify-between">
             <h2 className="font-serif text-2xl font-bold text-foreground">{category}</h2>
-            <Link to="/browse" search={{ category }} className="text-sm font-medium text-accent-foreground hover:underline">
+            <Link to="/browse" search={{ category, q: "", page: 1 }} className="text-sm font-medium text-accent-foreground hover:underline">
               See all →
             </Link>
           </div>

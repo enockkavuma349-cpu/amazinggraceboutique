@@ -74,6 +74,7 @@ function AboutPage() {
           </p>
           <Link
             to="/browse"
+            search={{ category: "All", q: "", page: 1 }}
             className="mt-4 inline-block rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground"
           >
             Browse the shop
