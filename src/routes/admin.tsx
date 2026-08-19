@@ -109,10 +109,24 @@ function AdminPage() {
   return (
     <SiteLayout>
       <div className="mx-auto max-w-7xl px-4 py-10">
-        <h1 className="font-serif text-3xl font-bold text-foreground">Admin · Inventory log</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Fill each picture slot, edit product details and track every change. Saved to this browser.
-        </p>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h1 className="font-serif text-3xl font-bold text-foreground">Admin · Inventory log</h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Fill each picture slot, edit product details and track every change. Saved to this browser.
+            </p>
+          </div>
+          <button
+            onClick={async () => {
+              await lock();
+              await router.invalidate();
+            }}
+            className="rounded-md border border-border px-3 py-2 text-sm font-medium text-foreground hover:bg-muted"
+          >
+            Sign out
+          </button>
+        </div>
+
 
         <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {STATS.map((s) => (
