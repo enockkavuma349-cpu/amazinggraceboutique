@@ -1,9 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import * as React from "react";
 import { SiteLayout } from "@/components/shop/SiteLayout";
 import { SlotImage } from "@/components/shop/ProductCard";
 import { CATEGORIES, formatUGX, type Category } from "@/lib/catalog";
 import { useShop } from "@/lib/shop-store";
+import { checkAdminUnlocked, lockAdmin, unlockAdmin } from "@/lib/admin-gate.functions";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -19,11 +21,68 @@ export const Route = createFileRoute("/admin")({
       { property: "og:description", content: "Manage product slots, stock levels and activity history." },
     ],
   }),
-  component: AdminPage,
+  loader: () => checkAdminUnlocked(),
+  component: AdminGate,
 });
 
+function AdminGate() {
+  const { unlocked } = Route.useLoaderData();
+  return unlocked ? <AdminPage /> : <AdminLogin />;
+}
+
+function AdminLogin() {
+  const router = useRouter();
+  const unlock = useServerFn(unlockAdmin);
+  const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState(false);
+  const [busy, setBusy] = React.useState(false);
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setBusy(true);
+    setError(false);
+    const res = await unlock({ data: { password } });
+    setBusy(false);
+    if (res.ok) await router.invalidate();
+    else setError(true);
+  }
+
+  return (
+    <SiteLayout>
+      <div className="mx-auto flex max-w-md flex-col px-4 py-20">
+        <h1 className="font-serif text-3xl font-bold text-foreground">Admin sign in</h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          This area is restricted. Enter the admin password to manage inventory.
+        </p>
+        <form onSubmit={onSubmit} className="mt-8 space-y-4">
+          <input
+            type="password"
+            name="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Admin password"
+            className="w-full rounded-md border border-border bg-card px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary"
+          />
+          {error && <p className="text-sm text-destructive">Incorrect password. Try again.</p>}
+          <button
+            type="submit"
+            disabled={busy || !password}
+            className="w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+          >
+            {busy ? "Checking…" : "Unlock admin"}
+          </button>
+        </form>
+      </div>
+    </SiteLayout>
+  );
+}
+
 function AdminPage() {
+  const router = useRouter();
+  const lock = useServerFn(lockAdmin);
   const { products, log, updateProduct, resetProduct } = useShop();
+
   const [category, setCategory] = React.useState<Category | "All">("All");
   const [term, setTerm] = React.useState("");
   const [editing, setEditing] = React.useState<string | null>(null);
