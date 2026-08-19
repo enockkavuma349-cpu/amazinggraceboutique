@@ -124,19 +124,30 @@ function CartPage() {
                 </div>
               </dl>
               <button
-                onClick={() => {
-                  clearCart();
-                  setPlaced(true);
-                }}
+                onClick={() => setCheckoutOpen(true)}
                 className="mt-5 w-full rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground"
               >
-                Place order
+                Checkout · {formatUGX(total)}
               </button>
-              <p className="mt-2 text-center text-xs text-muted-foreground">Pay on delivery available in Kampala.</p>
+              <p className="mt-2 text-center text-xs text-muted-foreground">
+                Card (Mastercard/Visa), MTN MoMo, Airtel Money or pay on delivery.
+              </p>
             </aside>
           </div>
         )}
       </div>
+
+      <CheckoutDialog
+        open={checkoutOpen}
+        total={total}
+        onClose={() => setCheckoutOpen(false)}
+        onPaid={(method, reference) => {
+          clearCart();
+          setCheckoutOpen(false);
+          setPlaced({ method, reference });
+        }}
+      />
     </SiteLayout>
   );
 }
+
