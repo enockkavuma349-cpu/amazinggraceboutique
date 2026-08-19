@@ -3,8 +3,10 @@ import { Trash2 } from "lucide-react";
 import * as React from "react";
 import { SiteLayout } from "@/components/shop/SiteLayout";
 import { SlotImage } from "@/components/shop/ProductCard";
+import { CheckoutDialog, type PayMethod } from "@/components/shop/CheckoutDialog";
 import { formatUGX } from "@/lib/catalog";
 import { useShop } from "@/lib/shop-store";
+
 
 export const Route = createFileRoute("/cart")({
   head: () => ({
@@ -23,11 +25,20 @@ export const Route = createFileRoute("/cart")({
 
 const DELIVERY = 15000;
 
+const METHOD_LABEL: Record<PayMethod, string> = {
+  card: "Card (Mastercard/Visa)",
+  mtn: "MTN MoMo",
+  airtel: "Airtel Money",
+  cod: "Pay on delivery",
+};
+
 function CartPage() {
   const { cartDetailed, cartTotal, setQty, removeFromCart, clearCart } = useShop();
-  const [placed, setPlaced] = React.useState(false);
+  const [placed, setPlaced] = React.useState<{ method: PayMethod; reference: string } | null>(null);
+  const [checkoutOpen, setCheckoutOpen] = React.useState(false);
 
   const delivery = cartTotal >= 200000 || cartTotal === 0 ? 0 : DELIVERY;
+  const total = cartTotal + delivery;
 
   if (placed) {
     return (
@@ -38,6 +49,11 @@ function CartPage() {
             Thank you for shopping with Amazing Grace Boutique. Our team will call you shortly to confirm
             delivery details.
           </p>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Payment method: <span className="font-medium text-foreground">{METHOD_LABEL[placed.method]}</span>
+            <br />
+            Reference: <span className="font-mono text-foreground">{placed.reference}</span>
+          </p>
           <Link to="/browse" search={{ category: "All", q: "", page: 1 }} className="mt-6 inline-block rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground">
             Continue shopping
           </Link>
@@ -45,6 +61,7 @@ function CartPage() {
       </SiteLayout>
     );
   }
+
 
   return (
     <SiteLayout>
@@ -107,19 +124,30 @@ function CartPage() {
                 </div>
               </dl>
               <button
-                onClick={() => {
-                  clearCart();
-                  setPlaced(true);
-                }}
+                onClick={() => setCheckoutOpen(true)}
                 className="mt-5 w-full rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground"
               >
-                Place order
+                Checkout · {formatUGX(total)}
               </button>
-              <p className="mt-2 text-center text-xs text-muted-foreground">Pay on delivery available in Kampala.</p>
+              <p className="mt-2 text-center text-xs text-muted-foreground">
+                Card (Mastercard/Visa), MTN MoMo, Airtel Money or pay on delivery.
+              </p>
             </aside>
           </div>
         )}
       </div>
+
+      <CheckoutDialog
+        open={checkoutOpen}
+        total={total}
+        onClose={() => setCheckoutOpen(false)}
+        onPaid={(method, reference) => {
+          clearCart();
+          setCheckoutOpen(false);
+          setPlaced({ method, reference });
+        }}
+      />
     </SiteLayout>
   );
 }
+
