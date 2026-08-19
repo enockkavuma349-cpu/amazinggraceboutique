@@ -23,11 +23,20 @@ export const Route = createFileRoute("/cart")({
 
 const DELIVERY = 15000;
 
+const METHOD_LABEL: Record<PayMethod, string> = {
+  card: "Card (Mastercard/Visa)",
+  mtn: "MTN MoMo",
+  airtel: "Airtel Money",
+  cod: "Pay on delivery",
+};
+
 function CartPage() {
   const { cartDetailed, cartTotal, setQty, removeFromCart, clearCart } = useShop();
-  const [placed, setPlaced] = React.useState(false);
+  const [placed, setPlaced] = React.useState<{ method: PayMethod; reference: string } | null>(null);
+  const [checkoutOpen, setCheckoutOpen] = React.useState(false);
 
   const delivery = cartTotal >= 200000 || cartTotal === 0 ? 0 : DELIVERY;
+  const total = cartTotal + delivery;
 
   if (placed) {
     return (
@@ -38,6 +47,11 @@ function CartPage() {
             Thank you for shopping with Amazing Grace Boutique. Our team will call you shortly to confirm
             delivery details.
           </p>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Payment method: <span className="font-medium text-foreground">{METHOD_LABEL[placed.method]}</span>
+            <br />
+            Reference: <span className="font-mono text-foreground">{placed.reference}</span>
+          </p>
           <Link to="/browse" search={{ category: "All", q: "", page: 1 }} className="mt-6 inline-block rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground">
             Continue shopping
           </Link>
@@ -45,6 +59,7 @@ function CartPage() {
       </SiteLayout>
     );
   }
+
 
   return (
     <SiteLayout>
