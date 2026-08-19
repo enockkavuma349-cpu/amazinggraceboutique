@@ -17,13 +17,13 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <div className="bg-primary text-primary-foreground">
-        <p className="mx-auto max-w-7xl px-4 py-2 text-center text-xs tracking-wide">
+      <div className="kitenge-bar text-primary-foreground">
+        <p className="mx-auto max-w-7xl px-4 py-2 text-center text-xs font-semibold tracking-wide drop-shadow-sm">
           Free delivery within Kampala on orders above UGX 200,000 · Pay on delivery available
         </p>
       </div>
 
-      <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b-4 border-transparent kitenge-edge bg-card/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3">
           <button
             className="rounded-md p-2 text-foreground md:hidden"
@@ -34,11 +34,11 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
           </button>
 
           <Link to="/" className="flex items-center gap-2">
-            <span className="grid size-9 place-items-center rounded-full bg-accent font-serif text-lg font-bold text-accent-foreground">
+            <span className="kitenge-pattern grid size-9 place-items-center rounded-full font-serif text-lg font-bold text-primary-foreground shadow-sm">
               A
             </span>
             <span className="leading-tight">
-              <span className="block font-serif text-lg font-bold text-foreground">Amazing Grace</span>
+              <span className="kitenge-text block font-serif text-lg font-bold">Amazing Grace</span>
               <span className="block text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground">Boutique</span>
             </span>
           </Link>
@@ -96,10 +96,10 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
 
       <main className="flex-1">{children}</main>
 
-      <footer className="mt-16 border-t border-border bg-secondary">
+      <footer className="mt-16 border-t-4 border-transparent kitenge-edge kitenge-pattern-soft">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <h3 className="font-serif text-lg font-bold text-foreground">Amazing Grace Boutique</h3>
+            <h3 className="kitenge-text font-serif text-lg font-bold">Amazing Grace Boutique</h3>
             <p className="mt-2 text-sm text-muted-foreground">
               Clothes, watches, perfumes and fine jewelry — curated with grace, delivered with care.
             </p>
@@ -130,7 +130,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
             </ul>
           </div>
         </div>
-        <div className="border-t border-border py-4 text-center text-xs text-muted-foreground">
+        <div className="kitenge-bar py-4 text-center text-xs font-medium text-primary-foreground">
           © {new Date().getFullYear()} Amazing Grace Boutique. All rights reserved.
         </div>
       </footer>
