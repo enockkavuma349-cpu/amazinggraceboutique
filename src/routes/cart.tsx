@@ -3,8 +3,10 @@ import { Trash2 } from "lucide-react";
 import * as React from "react";
 import { SiteLayout } from "@/components/shop/SiteLayout";
 import { SlotImage } from "@/components/shop/ProductCard";
+import { CheckoutDialog, type PayMethod } from "@/components/shop/CheckoutDialog";
 import { formatUGX } from "@/lib/catalog";
 import { useShop } from "@/lib/shop-store";
+
 
 export const Route = createFileRoute("/cart")({
   head: () => ({
