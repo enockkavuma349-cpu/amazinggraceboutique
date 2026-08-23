@@ -36,16 +36,17 @@ function HomePage() {
 
   return (
     <SiteLayout>
-      <section className="border-b border-border bg-secondary">
-        <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-14 lg:grid-cols-2">
+      <section className="relative border-b border-border bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/kitenge-bg.jpg')" }}>
+        <div className="absolute inset-0 bg-black/65" aria-hidden="true" />
+        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-8 px-4 py-14 lg:grid-cols-2">
           <div>
-            <span className="inline-block rounded-full bg-accent/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent-foreground">
+            <span className="inline-block rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
               New season · 200 slots ready
             </span>
-            <h1 className="mt-4 font-serif text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+            <h1 className="mt-4 font-serif text-4xl font-bold leading-tight text-white sm:text-5xl">
               Amazing Grace Boutique
             </h1>
-            <p className="mt-4 max-w-xl text-muted-foreground">
+            <p className="mt-4 max-w-xl text-white/80">
               Clothes, watches, perfumes and jewelry — all in one graceful storefront. Browse the catalogue,
               fill your cart, and let us bring it to your door.
             </p>
@@ -53,13 +54,13 @@ function HomePage() {
               <Link
                 to="/browse"
                 search={{ category: "All", q: "", page: 1 }}
-                className="rounded-md bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground hover:opacity-90"
+                className="rounded-md bg-white px-6 py-3 text-sm font-semibold text-foreground hover:bg-white/90"
               >
                 Browse the shop
               </Link>
               <Link
                 to="/about"
-                className="rounded-md border border-border px-6 py-3 text-sm font-semibold text-foreground hover:bg-muted"
+                className="rounded-md border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/20"
               >
                 About us
               </Link>
@@ -71,10 +72,10 @@ function HomePage() {
                 key={category}
                 to="/browse"
                 search={{ category, q: "", page: 1 }}
-                className="group relative flex h-36 flex-col justify-end overflow-hidden rounded-lg border border-border bg-card p-4 transition-shadow hover:shadow-lg sm:h-44"
+                className="group relative flex h-36 flex-col justify-end overflow-hidden rounded-lg border border-white/20 bg-black/30 p-4 text-white backdrop-blur-sm transition hover:bg-black/40 hover:shadow-lg sm:h-44"
               >
-                <span className="font-serif text-xl font-bold text-foreground">{category}</span>
-                <span className="text-xs text-muted-foreground">
+                <span className="font-serif text-xl font-bold text-white">{category}</span>
+                <span className="text-xs text-white/70">
                   {products.filter((p) => p.category === category).length} slots
                 </span>
               </Link>
