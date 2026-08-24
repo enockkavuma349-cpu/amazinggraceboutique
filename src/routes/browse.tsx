@@ -1,7 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import * as React from "react";
+import { Search } from "lucide-react";
 import { SiteLayout } from "@/components/shop/SiteLayout";
+import { KitengePageBanner } from "@/components/shop/KitengePageBanner";
 import { ProductCard } from "@/components/shop/ProductCard";
+import { Button } from "@/components/ui/button";
 import { CATEGORIES, type Category } from "@/lib/catalog";
 import { useShop } from "@/lib/shop-store";
 
@@ -25,6 +28,8 @@ export const Route = createFileRoute("/browse")({
       },
       { property: "og:title", content: "Browse All Products — Amazing Grace Boutique" },
       { property: "og:description", content: "Filter 200+ clothes, watches, perfumes and jewelry slots." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: BrowsePage,
@@ -61,14 +66,16 @@ function BrowsePage() {
 
   return (
     <SiteLayout>
+      <KitengePageBanner
+        eyebrow="The complete collection"
+        title="Browse the boutique"
+        description={`${filtered.length} product slots ${category !== "All" ? `in ${category}` : "across clothes, watches, perfumes and jewelry"}.`}
+        icon={Search}
+        motif="diamonds"
+      />
       <div className="mx-auto max-w-7xl px-4 py-8">
-        <h1 className="font-serif text-3xl font-bold text-foreground">Browse the boutique</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {filtered.length} product slots {category !== "All" ? `in ${category}` : "across all departments"}.
-        </p>
-
         <form
-          className="mt-6 flex flex-wrap gap-3"
+          className="flex flex-wrap gap-3 border-b-4 border-transparent pb-6 kitenge-edge"
           onSubmit={(e) => {
             e.preventDefault();
             navigate({ search: { category, q: term, page: 1 } });
@@ -89,9 +96,7 @@ function BrowsePage() {
             <option value="low">Price: Low to high</option>
             <option value="high">Price: High to low</option>
           </select>
-          <button className="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground">
-            Search
-          </button>
+          <Button type="submit" variant="secondary"><Search /> Search</Button>
         </form>
 
         <div className="mt-4 flex flex-wrap gap-2">

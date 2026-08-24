@@ -19,6 +19,8 @@ export const Route = createFileRoute("/")({
         property: "og:description",
         content: "Curated clothes, watches, perfumes and jewelry with cart, checkout and fast delivery.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: HomePage,
@@ -36,17 +38,17 @@ function HomePage() {
 
   return (
     <SiteLayout>
-      <section className="relative border-b border-border bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/kitenge-bg.jpg')" }}>
-        <div className="absolute inset-0 bg-black/65" aria-hidden="true" />
+      <section className="relative border-b border-border bg-cover bg-center bg-no-repeat kitenge-home-hero">
+        <div className="absolute inset-0 bg-foreground/70" aria-hidden="true" />
         <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-8 px-4 py-14 lg:grid-cols-2">
           <div>
-            <span className="inline-block rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
+            <span className="inline-block rounded-full bg-hero-foreground/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-hero-foreground backdrop-blur-sm">
               New season · 200 slots ready
             </span>
-            <h1 className="mt-4 font-serif text-4xl font-bold leading-tight text-white sm:text-5xl">
+            <h1 className="mt-4 font-serif text-4xl font-bold leading-tight text-hero-foreground sm:text-5xl">
               Amazing Grace Boutique
             </h1>
-            <p className="mt-4 max-w-xl text-white/80">
+            <p className="mt-4 max-w-xl text-hero-foreground/80">
               Clothes, watches, perfumes and jewelry — all in one graceful storefront. Browse the catalogue,
               fill your cart, and let us bring it to your door.
             </p>
@@ -54,13 +56,13 @@ function HomePage() {
               <Link
                 to="/browse"
                 search={{ category: "All", q: "", page: 1 }}
-                className="rounded-md bg-white px-6 py-3 text-sm font-semibold text-foreground hover:bg-white/90"
+                className="rounded-md bg-hero-foreground px-6 py-3 text-sm font-semibold text-foreground hover:bg-hero-foreground/90"
               >
                 Browse the shop
               </Link>
               <Link
                 to="/about"
-                className="rounded-md border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/20"
+                className="rounded-md border border-hero-foreground/30 bg-hero-foreground/10 px-6 py-3 text-sm font-semibold text-hero-foreground backdrop-blur-sm hover:bg-hero-foreground/20"
               >
                 About us
               </Link>
@@ -72,10 +74,10 @@ function HomePage() {
                 key={category}
                 to="/browse"
                 search={{ category, q: "", page: 1 }}
-                className="group relative flex h-36 flex-col justify-end overflow-hidden rounded-lg border border-white/20 bg-black/30 p-4 text-white backdrop-blur-sm transition hover:bg-black/40 hover:shadow-lg sm:h-44"
+                className="group relative flex h-36 flex-col justify-end overflow-hidden rounded-lg border border-hero-foreground/20 bg-foreground/30 p-4 text-hero-foreground backdrop-blur-sm transition hover:bg-foreground/40 hover:shadow-lg sm:h-44"
               >
-                <span className="font-serif text-xl font-bold text-white">{category}</span>
-                <span className="text-xs text-white/70">
+                <span className="font-serif text-xl font-bold text-hero-foreground">{category}</span>
+                <span className="text-xs text-hero-foreground/70">
                   {products.filter((p) => p.category === category).length} slots
                 </span>
               </Link>

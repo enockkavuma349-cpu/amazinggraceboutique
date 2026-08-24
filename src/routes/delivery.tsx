@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ShoppingCart, CreditCard, Truck, PackageCheck, Clock, RotateCcw } from "lucide-react";
 import { SiteLayout } from "@/components/shop/SiteLayout";
+import { KitengePageBanner } from "@/components/shop/KitengePageBanner";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/delivery")({
   head: () => ({
@@ -40,15 +42,13 @@ const ZONES = [
 function DeliveryPage() {
   return (
     <SiteLayout>
-      <section className="kitenge-bar">
-        <div className="mx-auto max-w-5xl px-4 py-10 text-center text-primary-foreground">
-          <h1 className="font-serif text-3xl font-bold drop-shadow sm:text-4xl">How to Order &amp; Delivery</h1>
-          <p className="mx-auto mt-3 max-w-2xl text-sm text-primary-foreground/90">
-            Shopping with Amazing Grace Boutique takes four simple steps — and you can pay only when the parcel
-            reaches your hands.
-          </p>
-        </div>
-      </section>
+      <KitengePageBanner
+        eyebrow="From our boutique to your door"
+        title="How to Order & Delivery"
+        description="Shop in four simple steps, with flexible payment and dependable delivery across Uganda."
+        icon={Truck}
+        motif="sunbursts"
+      />
 
       <section className="mx-auto max-w-5xl px-4 py-10">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -103,12 +103,9 @@ function DeliveryPage() {
             We answer calls, WhatsApp and email 8:00am – 8:00pm, seven days a week. Orders placed after 5:00pm
             are dispatched the next morning.
           </p>
-          <Link
-            to="/contact"
-            className="mt-4 inline-block rounded-md kitenge-bar px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
-          >
-            Contact us
-          </Link>
+          <Button asChild className="mt-4 kitenge-bar">
+            <Link to="/contact">Contact us</Link>
+          </Button>
         </div>
       </section>
     </SiteLayout>

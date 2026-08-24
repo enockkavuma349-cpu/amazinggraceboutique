@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { HeartHandshake } from "lucide-react";
 import { SiteLayout } from "@/components/shop/SiteLayout";
+import { KitengePageBanner } from "@/components/shop/KitengePageBanner";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -12,6 +15,8 @@ export const Route = createFileRoute("/about")({
       },
       { property: "og:title", content: "About Amazing Grace Boutique" },
       { property: "og:description", content: "Our story, values and promise to every customer." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AboutPage,
@@ -34,9 +39,15 @@ const MILESTONES = [
 function AboutPage() {
   return (
     <SiteLayout>
+      <KitengePageBanner
+        eyebrow="Rooted in Kampala"
+        title="About Us"
+        description="A boutique built on authenticity, fair pricing and grace in every customer interaction."
+        icon={HeartHandshake}
+        motif="sunbursts"
+      />
       <div className="mx-auto max-w-4xl px-4 py-12">
-        <h1 className="font-serif text-4xl font-bold text-foreground">About Us</h1>
-        <p className="mt-4 text-lg text-muted-foreground">
+        <p className="text-lg text-muted-foreground">
           Amazing Grace Boutique began with one simple belief: everyone deserves to feel beautifully put
           together, without paying a fortune or gambling on quality.
         </p>
@@ -46,7 +57,8 @@ function AboutPage() {
           shop brings that same counter-side care to your phone — browse, add to cart, and we handle the rest.
         </p>
 
-        <h2 className="mt-12 font-serif text-2xl font-bold text-foreground">What we stand for</h2>
+        <hr className="mt-12 kitenge-section-rule" />
+        <h2 className="mt-6 font-serif text-2xl font-bold text-foreground">What we stand for</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           {VALUES.map((v) => (
             <div key={v.title} className="rounded-lg border border-border bg-card p-5">
@@ -56,7 +68,8 @@ function AboutPage() {
           ))}
         </div>
 
-        <h2 className="mt-12 font-serif text-2xl font-bold text-foreground">Our journey</h2>
+        <hr className="mt-12 kitenge-section-rule" />
+        <h2 className="mt-6 font-serif text-2xl font-bold text-foreground">Our journey</h2>
         <ol className="mt-4 space-y-4 border-l border-border pl-6">
           {MILESTONES.map((m) => (
             <li key={m.year} className="relative">
@@ -72,13 +85,9 @@ function AboutPage() {
           <p className="mt-1 text-sm text-muted-foreground">
             Over 200 product slots waiting to be explored across four departments.
           </p>
-          <Link
-            to="/browse"
-            search={{ category: "All", q: "", page: 1 }}
-            className="mt-4 inline-block rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground"
-          >
-            Browse the shop
-          </Link>
+          <Button asChild variant="secondary" className="mt-4">
+            <Link to="/browse" search={{ category: "All", q: "", page: 1 }}>Browse the shop</Link>
+          </Button>
         </div>
       </div>
     </SiteLayout>
