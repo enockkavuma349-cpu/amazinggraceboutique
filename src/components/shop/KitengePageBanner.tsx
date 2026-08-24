@@ -9,6 +9,12 @@ type KitengePageBannerProps = {
   motif?: "diamonds" | "sunbursts" | "weave";
 };
 
+const MOTIF_CLASSES = {
+  diamonds: "kitenge-motif-diamonds",
+  sunbursts: "kitenge-motif-sunbursts",
+  weave: "kitenge-motif-weave",
+} as const;
+
 export function KitengePageBanner({
   eyebrow,
   title,
@@ -17,7 +23,7 @@ export function KitengePageBanner({
   motif = "diamonds",
 }: KitengePageBannerProps) {
   return (
-    <section className={cn("kitenge-page-banner", `kitenge-motif-${motif}`)}>
+    <section className={cn("kitenge-page-banner", MOTIF_CLASSES[motif])}>
       <div className="relative z-10 mx-auto flex max-w-7xl items-center gap-4 px-4 py-8 sm:py-10">
         <div className="grid size-12 shrink-0 place-items-center rounded-full border border-primary-foreground/35 bg-primary-foreground/10 backdrop-blur-sm sm:size-14">
           <Icon className="size-6 text-primary-foreground" aria-hidden="true" />
