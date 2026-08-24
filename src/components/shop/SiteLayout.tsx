@@ -9,6 +9,7 @@ const NAV = [
   { to: "/browse", label: "Browse" },
   { to: "/about", label: "About Us" },
   { to: "/contact", label: "Contact" },
+  { to: "/delivery", label: "Delivery" },
 ] as const;
 
 export function SiteLayout({ children }: { children: React.ReactNode }) {
@@ -118,6 +119,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
               <li><Link to="/about">About Us</Link></li>
               <li><Link to="/contact">Contact</Link></li>
+              <li><Link to="/delivery">Delivery</Link></li>
               <li><Link to="/admin">Admin Inventory</Link></li>
             </ul>
           </div>

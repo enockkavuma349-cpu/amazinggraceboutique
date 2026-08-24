@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Mail, MapPin, Phone, Clock } from "lucide-react";
+import { Mail, MapPin, Phone, Clock, MessageCircle } from "lucide-react";
 import * as React from "react";
 import { SiteLayout } from "@/components/shop/SiteLayout";
+import { KitengePageBanner } from "@/components/shop/KitengePageBanner";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -14,6 +16,8 @@ export const Route = createFileRoute("/contact")({
       },
       { property: "og:title", content: "Contact Amazing Grace Boutique" },
       { property: "og:description", content: "Phone, email, store address, opening hours and a message form." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: ContactPage,
@@ -37,13 +41,15 @@ function ContactPage() {
 
   return (
     <SiteLayout>
+      <KitengePageBanner
+        eyebrow="We are here to help"
+        title="Contact"
+        description="Questions about an order, a size or a scent? Talk to our Kampala boutique team."
+        icon={MessageCircle}
+        motif="weave"
+      />
       <div className="mx-auto max-w-5xl px-4 py-12">
-        <h1 className="font-serif text-4xl font-bold text-foreground">Contact</h1>
-        <p className="mt-2 text-muted-foreground">
-          Questions about an order, a size, or a scent? We would love to hear from you.
-        </p>
-
-        <div className="mt-8 grid gap-8 lg:grid-cols-2">
+        <div className="grid gap-8 lg:grid-cols-2">
           <div className="space-y-4">
             {DETAILS.map((d) => (
               <div key={d.label} className="flex gap-3 rounded-lg border border-border bg-card p-4">
@@ -75,9 +81,7 @@ function ContactPage() {
               placeholder="How can we help?"
               className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
             />
-            <button className="w-full rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground">
-              Send message
-            </button>
+            <Button type="submit" variant="secondary" className="w-full">Send message</Button>
             {sent && (
               <p className="text-sm text-muted-foreground">
                 Thank you — your message has been noted. We reply within one working day.
@@ -86,7 +90,8 @@ function ContactPage() {
           </form>
         </div>
 
-        <h2 className="mt-12 font-serif text-2xl font-bold text-foreground">Frequently asked</h2>
+        <hr className="mt-12 kitenge-section-rule" />
+        <h2 className="mt-6 font-serif text-2xl font-bold text-foreground">Frequently asked</h2>
         <div className="mt-4 space-y-3">
           {FAQ.map((f) => (
             <details key={f.q} className="rounded-lg border border-border bg-card p-4">

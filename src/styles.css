@@ -67,6 +67,7 @@
   --color-kitenge-indigo: var(--kitenge-indigo);
   --color-kitenge-teal: var(--kitenge-teal);
   --color-kitenge-leaf: var(--kitenge-leaf);
+  --color-hero-foreground: var(--hero-foreground);
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
@@ -91,6 +92,7 @@
   --border: oklch(0.89 0.04 95);
   --input: oklch(0.89 0.04 95);
   --ring: oklch(0.62 0.2 350);
+  --hero-foreground: oklch(0.985 0.01 95);
 
   /* Kitenge palette */
   --kitenge-marigold: oklch(0.8 0.17 78);
@@ -207,4 +209,53 @@
     radial-gradient(circle at 75% 70%, color-mix(in oklab, var(--kitenge-teal) 26%, transparent) 0 6px, transparent 7px),
     repeating-linear-gradient(45deg, color-mix(in oklab, var(--kitenge-indigo) 12%, transparent) 0 5px, transparent 5px 16px);
   background-size: 72px 72px, 72px 72px, 72px 72px;
+}
+
+/* High-contrast page banners with distinct wax-print inspired motifs */
+@utility kitenge-page-banner {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--kitenge-indigo);
+  color: var(--hero-foreground);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(90deg, color-mix(in oklab, var(--foreground) 58%, transparent), color-mix(in oklab, var(--foreground) 30%, transparent));
+  }
+}
+
+@utility kitenge-motif-diamonds {
+  background-image:
+    linear-gradient(45deg, transparent 38%, var(--kitenge-marigold) 39% 46%, transparent 47%),
+    linear-gradient(-45deg, transparent 38%, var(--kitenge-fuchsia) 39% 46%, transparent 47%);
+  background-size: 54px 54px;
+}
+
+@utility kitenge-motif-sunbursts {
+  background-image:
+    radial-gradient(circle, var(--kitenge-marigold) 0 6px, transparent 7px 15px, color-mix(in oklab, var(--kitenge-leaf) 75%, transparent) 16px 20px, transparent 21px),
+    radial-gradient(circle, var(--kitenge-fuchsia) 0 5px, transparent 6px 13px, color-mix(in oklab, var(--kitenge-teal) 75%, transparent) 14px 18px, transparent 19px);
+  background-position: 0 0, 46px 46px;
+  background-size: 92px 92px;
+}
+
+@utility kitenge-motif-weave {
+  background-image:
+    repeating-linear-gradient(45deg, color-mix(in oklab, var(--kitenge-flame) 85%, transparent) 0 8px, transparent 8px 22px),
+    repeating-linear-gradient(-45deg, color-mix(in oklab, var(--kitenge-leaf) 70%, transparent) 0 8px, transparent 8px 22px);
+  background-size: 44px 44px;
+}
+
+@utility kitenge-section-rule {
+  height: 0.35rem;
+  border: 0;
+  background-image: var(--gradient-kitenge);
+}
+
+@utility kitenge-home-hero {
+  background-image: url('/kitenge-bg.jpg');
 }
