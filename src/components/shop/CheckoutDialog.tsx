@@ -15,6 +15,15 @@ function digits(v: string) {
   return v.replace(/\D/g, "");
 }
 
+export type CheckoutDetails = {
+  method: PayMethod;
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
+  note: string;
+};
+
 export function CheckoutDialog({
   open,
   total,
@@ -24,11 +33,18 @@ export function CheckoutDialog({
   open: boolean;
   total: number;
   onClose: () => void;
-  onPaid: (method: PayMethod, reference: string) => void;
+  onPaid: (details: CheckoutDetails) => Promise<void> | void;
 }) {
   const [method, setMethod] = React.useState<PayMethod>("card");
   const [status, setStatus] = React.useState<"idle" | "processing" | "done">("idle");
   const [error, setError] = React.useState<string | null>(null);
+
+  // delivery details
+  const [name, setName] = React.useState("");
+  const [phoneNumber, setPhoneNumber] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [address, setAddress] = React.useState("");
+  const [note, setNote] = React.useState("");
 
   // card
   const [cardName, setCardName] = React.useState("");
@@ -44,6 +60,7 @@ export function CheckoutDialog({
       setError(null);
     }
   }, [open]);
+
 
   if (!open) return null;
 
