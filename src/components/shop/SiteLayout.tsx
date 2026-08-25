@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, ShoppingCart, ShieldCheck } from "lucide-react";
+import { Menu, ShoppingCart, ShieldCheck, MessageCircle } from "lucide-react";
 import * as React from "react";
 import { useShop } from "@/lib/shop-store";
 import { cn } from "@/lib/utils";
+import { formatUGX } from "@/lib/catalog";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -12,8 +13,23 @@ const NAV = [
   { to: "/delivery", label: "Delivery" },
 ] as const;
 
+const WHATSAPP_NUMBER = "256700000000"; // Replace with your real WhatsApp business number
+
+function buildWhatsAppMessage(cartDetailed: { product: { name: string; price: number }; qty: number }[]) {
+  if (cartDetailed.length === 0) {
+    return encodeURIComponent("Hello Amazing Grace Boutique! I'd like to place an order.");
+  }
+  const lines = cartDetailed.map((l) => `${l.qty} × ${l.product.name} — ${formatUGX(l.product.price * l.qty)}`);
+  const total = cartDetailed.reduce((n, l) => n + l.qty * l.product.price, 0);
+  const body =
+    `Hello Amazing Grace Boutique! I'd like to order:\n\n` +
+    lines.join("\n") +
+    `\n\n*Total: ${formatUGX(total)}*\n\nPlease confirm availability and delivery details. Thank you!`;
+  return encodeURIComponent(body);
+}
+
 export function SiteLayout({ children }: { children: React.ReactNode }) {
-  const { cartCount } = useShop();
+  const { cartCount, cartDetailed } = useShop();
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -136,6 +152,17 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
           © {new Date().getFullYear()} Amazing Grace Boutique. All rights reserved.
         </div>
       </footer>
+
+      <a
+        href={`https://wa.me/${WHATSAPP_NUMBER}?text=${buildWhatsAppMessage(cartDetailed)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Order on WhatsApp"
+        className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-black/20 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 sm:bottom-6 sm:right-6"
+      >
+        <MessageCircle className="size-5 fill-current" />
+        <span className="hidden sm:inline">Order on WhatsApp</span>
+      </a>
     </div>
   );
 }
