@@ -132,7 +132,17 @@ export function CheckoutDialog({
           </div>
         ) : (
           <>
+            <div className="mt-5 space-y-3 rounded-lg border border-border bg-background/60 p-3">
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Delivery details</p>
+              <Field label="Full name" value={name} onChange={setName} placeholder="Grace Nakato" />
+              <Field label="Phone number" value={phoneNumber} onChange={setPhoneNumber} placeholder="0771 234 567" inputMode="tel" />
+              <Field label="Email (optional)" value={email} onChange={setEmail} placeholder="you@example.com" />
+              <Field label="Delivery address" value={address} onChange={setAddress} placeholder="Kampala Road, Nakasero" />
+              <Field label="Note (optional)" value={note} onChange={setNote} placeholder="Landmark, preferred time…" />
+            </div>
+
             <div className="mt-5 grid gap-2">
+
               {METHODS.map((m) => (
                 <button
                   key={m.id}
