@@ -67,6 +67,10 @@ export function CheckoutDialog({
   const brand = digits(cardNumber).startsWith("5") ? "Mastercard" : digits(cardNumber).startsWith("4") ? "Visa" : "Card";
 
   function validate(): string | null {
+    if (name.trim().length < 2) return "Enter your full name.";
+    if (digits(phoneNumber).length < 9) return "Enter a valid contact phone number.";
+    if (address.trim().length < 4) return "Enter your delivery address.";
+    if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return "Enter a valid email address.";
     if (method === "card") {
       if (!cardName.trim()) return "Enter the name on the card.";
       if (digits(cardNumber).length < 16) return "Enter a valid 16-digit card number.";
@@ -92,10 +96,14 @@ export function CheckoutDialog({
     }
     setError(null);
     setStatus("processing");
-    await new Promise((r) => setTimeout(r, method === "cod" ? 700 : 1800));
-    const reference = `AGB-${Date.now().toString(36).toUpperCase()}`;
-    setStatus("done");
-    setTimeout(() => onPaid(method, reference), 900);
+    await new Promise((r) => setTimeout(r, method === "cod" ? 700 : 1500));
+    try {
+      await onPaid({ method, name: name.trim(), phone: phoneNumber.trim(), email: email.trim(), address: address.trim(), note: note.trim() });
+      setStatus("done");
+    } catch (e) {
+      setStatus("idle");
+      setError(e instanceof Error ? e.message : "Could not place the order. Please try again.");
+    }
   }
 
   return (
@@ -124,7 +132,17 @@ export function CheckoutDialog({
           </div>
         ) : (
           <>
+            <div className="mt-5 space-y-3 rounded-lg border border-border bg-background/60 p-3">
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Delivery details</p>
+              <Field label="Full name" value={name} onChange={setName} placeholder="Grace Nakato" />
+              <Field label="Phone number" value={phoneNumber} onChange={setPhoneNumber} placeholder="0771 234 567" inputMode="tel" />
+              <Field label="Email (optional)" value={email} onChange={setEmail} placeholder="you@example.com" />
+              <Field label="Delivery address" value={address} onChange={setAddress} placeholder="Kampala Road, Nakasero" />
+              <Field label="Note (optional)" value={note} onChange={setNote} placeholder="Landmark, preferred time…" />
+            </div>
+
             <div className="mt-5 grid gap-2">
+
               {METHODS.map((m) => (
                 <button
                   key={m.id}
