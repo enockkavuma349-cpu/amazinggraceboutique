@@ -1,9 +1,11 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { Trash2 } from "lucide-react";
 import * as React from "react";
 import { SiteLayout } from "@/components/shop/SiteLayout";
 import { SlotImage } from "@/components/shop/ProductCard";
-import { CheckoutDialog, type PayMethod } from "@/components/shop/CheckoutDialog";
+import { CheckoutDialog } from "@/components/shop/CheckoutDialog";
+import { placeOrder } from "@/lib/orders.functions";
 import { formatUGX } from "@/lib/catalog";
 import { useShop } from "@/lib/shop-store";
 
@@ -25,43 +27,14 @@ export const Route = createFileRoute("/cart")({
 
 const DELIVERY = 15000;
 
-const METHOD_LABEL: Record<PayMethod, string> = {
-  card: "Card (Mastercard/Visa)",
-  mtn: "MTN MoMo",
-  airtel: "Airtel Money",
-  cod: "Pay on delivery",
-};
-
 function CartPage() {
   const { cartDetailed, cartTotal, setQty, removeFromCart, clearCart } = useShop();
-  const [placed, setPlaced] = React.useState<{ method: PayMethod; reference: string } | null>(null);
   const [checkoutOpen, setCheckoutOpen] = React.useState(false);
+  const submitOrder = useServerFn(placeOrder);
+  const navigate = useNavigate();
 
   const delivery = cartTotal >= 200000 || cartTotal === 0 ? 0 : DELIVERY;
   const total = cartTotal + delivery;
-
-  if (placed) {
-    return (
-      <SiteLayout>
-        <div className="mx-auto max-w-xl px-4 py-24 text-center">
-          <h1 className="font-serif text-3xl font-bold text-foreground">Order received</h1>
-          <p className="mt-3 text-muted-foreground">
-            Thank you for shopping with Amazing Grace Boutique. Our team will call you shortly to confirm
-            delivery details.
-          </p>
-          <p className="mt-4 text-sm text-muted-foreground">
-            Payment method: <span className="font-medium text-foreground">{METHOD_LABEL[placed.method]}</span>
-            <br />
-            Reference: <span className="font-mono text-foreground">{placed.reference}</span>
-          </p>
-          <Link to="/browse" search={{ category: "All", q: "", page: 1 }} className="mt-6 inline-block rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground">
-            Continue shopping
-          </Link>
-        </div>
-      </SiteLayout>
-    );
-  }
-
 
   return (
     <SiteLayout>
@@ -141,10 +114,27 @@ function CartPage() {
         open={checkoutOpen}
         total={total}
         onClose={() => setCheckoutOpen(false)}
-        onPaid={(method, reference) => {
+        onPaid={async (details) => {
+          const result = await submitOrder({
+            data: {
+              customer_name: details.name,
+              customer_phone: details.phone,
+              customer_email: details.email,
+              delivery_address: details.address,
+              notes: details.note,
+              payment_method: details.method,
+              delivery_fee: delivery,
+              items: cartDetailed.map(({ product, qty }) => ({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                qty,
+              })),
+            },
+          });
           clearCart();
           setCheckoutOpen(false);
-          setPlaced({ method, reference });
+          await navigate({ to: "/order/$reference", params: { reference: result.reference } });
         }}
       />
     </SiteLayout>
