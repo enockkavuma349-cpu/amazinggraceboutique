@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, ShoppingCart, ShieldCheck, MessageCircle } from "lucide-react";
+import { Menu, ShoppingCart, ShieldCheck, MessageCircle, Search } from "lucide-react";
 import * as React from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { useShop } from "@/lib/shop-store";
 import { cn } from "@/lib/utils";
-import { formatUGX } from "@/lib/catalog";
+import { formatUGX, CATEGORIES, type Category } from "@/lib/catalog";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -28,6 +29,77 @@ function buildWhatsAppMessage(cartDetailed: { product: { name: string; price: nu
   return encodeURIComponent(body);
 }
 
+function MobileSearch({ onDone }: { onDone: () => void }) {
+  const navigate = useNavigate();
+  const [term, setTerm] = React.useState("");
+  return (
+    <form
+      className="flex items-center gap-2 py-2 md:hidden"
+      role="search"
+      onSubmit={(e) => {
+        e.preventDefault();
+        onDone();
+        navigate({ to: "/browse", search: { category: "All", q: term.trim(), page: 1 } });
+      }}
+    >
+      <input
+        value={term}
+        onChange={(e) => setTerm(e.target.value)}
+        placeholder="Search products…"
+        aria-label="Search products"
+        className="min-w-0 flex-1 rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground"
+      />
+      <button type="submit" aria-label="Search" className="rounded-md bg-accent px-3 py-2 text-accent-foreground">
+        <Search className="size-4" />
+      </button>
+    </form>
+  );
+}
+
+function HeaderSearch() {
+  const navigate = useNavigate();
+  const [term, setTerm] = React.useState("");
+  const [category, setCategory] = React.useState<Category | "All">("All");
+
+  return (
+    <form
+      className="ml-4 hidden flex-1 items-center gap-2 md:flex"
+      onSubmit={(e) => {
+        e.preventDefault();
+        navigate({ to: "/browse", search: { category, q: term.trim(), page: 1 } });
+      }}
+      role="search"
+    >
+      <select
+        value={category}
+        onChange={(e) => setCategory(e.target.value as Category | "All")}
+        aria-label="Category"
+        className="rounded-md border border-input bg-background px-2 py-2 text-xs text-foreground"
+      >
+        {(["All", ...CATEGORIES] as const).map((c) => (
+          <option key={c} value={c}>
+            {c}
+          </option>
+        ))}
+      </select>
+      <input
+        value={term}
+        onChange={(e) => setTerm(e.target.value)}
+        placeholder="Search clothes, watches, perfumes…"
+        aria-label="Search products"
+        className="min-w-0 flex-1 rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-accent"
+      />
+      <button
+        type="submit"
+        aria-label="Search"
+        className="rounded-md bg-accent px-3 py-2 text-accent-foreground"
+      >
+        <Search className="size-4" />
+      </button>
+    </form>
+  );
+}
+
 export function SiteLayout({ children }: { children: React.ReactNode }) {
   const { cartCount, cartDetailed } = useShop();
   const [open, setOpen] = React.useState(false);
@@ -43,7 +115,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-40 border-b-4 border-transparent kitenge-edge bg-card/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3">
           <button
-            className="rounded-md p-2 text-foreground md:hidden"
+            className="rounded-md p-2 text-foreground lg:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
           >
@@ -97,8 +169,9 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        <div className={cn("border-t border-border md:hidden", open ? "block" : "hidden")}>
+        <div className={cn("border-t border-border lg:hidden", open ? "block" : "hidden")}>
           <nav className="mx-auto flex max-w-7xl flex-col px-4 py-2">
+            <MobileSearch onDone={() => setOpen(false)} />
             {[...NAV, { to: "/admin", label: "Admin Inventory" } as const].map((item) => (
               <Link
                 key={item.to}
