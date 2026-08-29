@@ -60,7 +60,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
             </span>
           </Link>
 
-          <nav className="ml-8 hidden items-center gap-6 md:flex">
+          <nav className="ml-6 hidden items-center gap-5 lg:flex">
             {NAV.map((item) => (
               <Link
                 key={item.to}
@@ -73,6 +73,9 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
               </Link>
             ))}
           </nav>
+
+          <HeaderSearch />
+
 
           <div className="ml-auto flex items-center gap-2">
             <Link
