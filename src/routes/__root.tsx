@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ShopProvider } from "../lib/shop-store";
+import { ScrollEffects } from "../components/shop/ScrollEffects";
 
 
 function NotFoundComponent() {
@@ -128,6 +129,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <ShopProvider>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <ScrollEffects />
         <Outlet />
       </ShopProvider>
     </QueryClientProvider>
