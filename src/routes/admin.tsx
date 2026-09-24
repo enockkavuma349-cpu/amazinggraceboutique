@@ -273,6 +273,8 @@ function AdminPage() {
           </p>
         )}
 
+        <OrdersSection />
+
         <section className="mt-12">
           <h2 className="font-serif text-2xl font-bold text-foreground">Activity log</h2>
           <div className="mt-3 divide-y divide-border rounded-lg border border-border bg-card">
