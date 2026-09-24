@@ -6,6 +6,7 @@ import { SlotImage } from "@/components/shop/ProductCard";
 import { CATEGORIES, formatUGX, type Category } from "@/lib/catalog";
 import { useShop } from "@/lib/shop-store";
 import { checkAdminUnlocked, lockAdmin, unlockAdmin } from "@/lib/admin-gate.functions";
+import { listOrders } from "@/lib/orders.functions";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -273,6 +274,8 @@ function AdminPage() {
           </p>
         )}
 
+        <OrdersSection />
+
         <section className="mt-12">
           <h2 className="font-serif text-2xl font-bold text-foreground">Activity log</h2>
           <div className="mt-3 divide-y divide-border rounded-lg border border-border bg-card">
@@ -287,5 +290,67 @@ function AdminPage() {
         </section>
       </div>
     </SiteLayout>
+  );
+}
+
+type OrderRow = Awaited<ReturnType<typeof listOrders>>[number];
+
+function OrdersSection() {
+  const fetchOrders = useServerFn(listOrders);
+  const [orders, setOrders] = React.useState<OrderRow[] | null>(null);
+  const [error, setError] = React.useState(false);
+
+  const load = React.useCallback(() => {
+    setError(false);
+    fetchOrders()
+      .then(setOrders)
+      .catch(() => setError(true));
+  }, [fetchOrders]);
+
+  React.useEffect(() => {
+    load();
+  }, [load]);
+
+  return (
+    <section className="mt-12">
+      <div className="flex items-center justify-between gap-3">
+        <h2 className="font-serif text-2xl font-bold text-foreground">Customer orders</h2>
+        <button
+          onClick={load}
+          className="rounded-md border border-border px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted"
+        >
+          Refresh
+        </button>
+      </div>
+      <div className="mt-3 divide-y divide-border rounded-lg border border-border bg-card">
+        {error && <p className="p-4 text-sm text-destructive">Could not load orders.</p>}
+        {!error && orders === null && <p className="p-4 text-sm text-muted-foreground">Loading orders…</p>}
+        {orders?.length === 0 && <p className="p-4 text-sm text-muted-foreground">No orders yet.</p>}
+        {orders?.map((o) => {
+          const items = (Array.isArray(o.items) ? o.items : []) as { name: string; qty: number }[];
+          return (
+            <details key={o.id} className="p-3 text-sm">
+              <summary className="flex cursor-pointer flex-wrap items-center justify-between gap-2">
+                <span className="font-semibold text-foreground">{o.reference}</span>
+                <span className="text-foreground">{o.customer_name}</span>
+                <span className="font-semibold text-foreground">{formatUGX(o.total)}</span>
+                <span className="text-xs text-muted-foreground">{new Date(o.created_at).toLocaleString()}</span>
+              </summary>
+              <div className="mt-3 grid gap-1 text-muted-foreground sm:grid-cols-2">
+                <p>Phone: <span className="text-foreground">{o.customer_phone}</span></p>
+                <p>Email: <span className="text-foreground">{o.customer_email ?? "—"}</span></p>
+                <p>Address: <span className="text-foreground">{o.delivery_address}</span></p>
+                <p>Payment: <span className="text-foreground">{o.payment_method}</span></p>
+                <p>Status: <span className="text-foreground">{o.status}</span></p>
+                {o.notes && <p>Note: <span className="text-foreground">{o.notes}</span></p>}
+                <p className="sm:col-span-2">
+                  Items: <span className="text-foreground">{items.map((i) => `${i.qty}× ${i.name}`).join(", ")}</span>
+                </p>
+              </div>
+            </details>
+          );
+        })}
+      </div>
+    </section>
   );
 }
