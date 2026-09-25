@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Truck, ShieldCheck, Sparkles, Headphones } from "lucide-react";
 import { SiteLayout } from "@/components/shop/SiteLayout";
 import { ProductCard } from "@/components/shop/ProductCard";
+import { HeroSlideshow } from "@/components/shop/HeroSlideshow";
 import { CATEGORIES } from "@/lib/catalog";
 import { useShop } from "@/lib/shop-store";
 
@@ -68,21 +69,7 @@ function HomePage() {
               </Link>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-2 sm:gap-3">
-            {CATEGORIES.map((category) => (
-              <Link
-                key={category}
-                to="/browse"
-                search={{ category, q: "", page: 1 }}
-                className="group relative flex h-32 flex-col justify-end overflow-hidden rounded-lg border border-hero-foreground/20 bg-foreground/30 p-3 text-hero-foreground backdrop-blur-sm transition hover:bg-foreground/40 hover:shadow-lg sm:h-40 sm:p-4 lg:h-44"
-              >
-                <span className="font-serif text-lg font-bold text-hero-foreground sm:text-xl">{category}</span>
-                <span className="text-[0.65rem] text-hero-foreground/70 sm:text-xs">
-                  {products.filter((p) => p.category === category).length} slots
-                </span>
-              </Link>
-            ))}
-          </div>
+          <HeroSlideshow />
         </div>
       </section>
 
