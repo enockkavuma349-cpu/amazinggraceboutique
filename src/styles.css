@@ -190,6 +190,22 @@
       repeating-linear-gradient(45deg, color-mix(in oklab, var(--kitenge-flame) 22%, transparent) 0 6px, transparent 6px 18px);
     background-size: 76px 76px, 76px 76px, 76px 76px, 76px 76px;
   }
+
+  /* Let the backdrop show through page sections; cards keep solid fills */
+  body > div,
+  body main,
+  body section,
+  body article,
+  body aside,
+  body footer,
+  body [class*="bg-background"]:not(header):not(header *) {
+    background-color: transparent;
+  }
+
+  /* Slightly frosted cards so text stays readable over the pattern */
+  body .bg-card {
+    background-color: color-mix(in oklab, var(--card) 88%, transparent);
+  }
 }
 
 /* ---- Kitenge pattern utilities ---- */
