@@ -46,10 +46,10 @@ function HomePage() {
             <span className="inline-block rounded-full bg-hero-foreground/15 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-hero-foreground backdrop-blur-sm sm:text-xs">
               New season · 200 slots ready
             </span>
-            <h1 className="mt-3 font-serif text-3xl font-bold leading-[1.1] text-hero-foreground sm:mt-4 sm:text-4xl lg:text-5xl">
+            <h1 className="mt-3 font-serif text-3xl font-bold leading-[1.1] text-hero-foreground [text-shadow:0_2px_12px_rgb(0_0_0/0.55)] sm:mt-4 sm:text-4xl lg:text-5xl">
               Amazing Grace Boutique
             </h1>
-            <p className="mt-3 max-w-xl text-sm leading-relaxed text-hero-foreground/85 sm:mt-4 sm:text-base">
+            <p className="mt-3 max-w-xl text-sm font-medium leading-relaxed text-hero-foreground [text-shadow:0_1px_8px_rgb(0_0_0/0.5)] sm:mt-4 sm:text-base">
               Clothes, watches, perfumes and jewelry — all in one graceful storefront. Browse the catalogue,
               fill your cart, and let us bring it to your door.
             </p>
