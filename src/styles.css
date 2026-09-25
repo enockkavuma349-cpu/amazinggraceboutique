@@ -174,6 +174,40 @@
   }
 }
 
+/* Full-screen kitenge backdrop on mobile: a fixed layer behind all content */
+@media (max-width: 639px) {
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-color: color-mix(in oklab, var(--kitenge-marigold) 30%, var(--background));
+    background-image:
+      radial-gradient(circle at 25% 25%, color-mix(in oklab, var(--kitenge-fuchsia) 35%, transparent) 0 9px, transparent 10px),
+      radial-gradient(circle at 75% 70%, color-mix(in oklab, var(--kitenge-teal) 35%, transparent) 0 7px, transparent 8px),
+      radial-gradient(circle at 55% 40%, color-mix(in oklab, var(--kitenge-leaf) 30%, transparent) 0 6px, transparent 7px),
+      repeating-linear-gradient(45deg, color-mix(in oklab, var(--kitenge-flame) 22%, transparent) 0 6px, transparent 6px 18px);
+    background-size: 76px 76px, 76px 76px, 76px 76px, 76px 76px;
+  }
+
+  /* Let the backdrop show through page sections; cards keep solid fills */
+  body > div,
+  body main,
+  body section,
+  body article,
+  body aside,
+  body footer,
+  body [class*="bg-background"]:not(header):not(header *) {
+    background-color: transparent;
+  }
+
+  /* Slightly frosted cards so text stays readable over the pattern */
+  body .bg-card {
+    background-color: color-mix(in oklab, var(--card) 88%, transparent);
+  }
+}
+
 /* ---- Kitenge pattern utilities ---- */
 
 @utility kitenge-bar {
