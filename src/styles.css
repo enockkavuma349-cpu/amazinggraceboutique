@@ -182,12 +182,12 @@
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background-color: color-mix(in oklab, var(--kitenge-marigold) 30%, var(--background));
+    background-color: color-mix(in oklab, var(--kitenge-marigold) 16%, var(--background));
     background-image:
-      radial-gradient(circle at 25% 25%, color-mix(in oklab, var(--kitenge-fuchsia) 35%, transparent) 0 9px, transparent 10px),
-      radial-gradient(circle at 75% 70%, color-mix(in oklab, var(--kitenge-teal) 35%, transparent) 0 7px, transparent 8px),
-      radial-gradient(circle at 55% 40%, color-mix(in oklab, var(--kitenge-leaf) 30%, transparent) 0 6px, transparent 7px),
-      repeating-linear-gradient(45deg, color-mix(in oklab, var(--kitenge-flame) 22%, transparent) 0 6px, transparent 6px 18px);
+      radial-gradient(circle at 25% 25%, color-mix(in oklab, var(--kitenge-fuchsia) 18%, transparent) 0 9px, transparent 10px),
+      radial-gradient(circle at 75% 70%, color-mix(in oklab, var(--kitenge-teal) 18%, transparent) 0 7px, transparent 8px),
+      radial-gradient(circle at 55% 40%, color-mix(in oklab, var(--kitenge-leaf) 15%, transparent) 0 6px, transparent 7px),
+      repeating-linear-gradient(45deg, color-mix(in oklab, var(--kitenge-flame) 12%, transparent) 0 6px, transparent 6px 18px);
     background-size: 76px 76px, 76px 76px, 76px 76px, 76px 76px;
   }
 
@@ -202,9 +202,17 @@
     background-color: transparent;
   }
 
-  /* Slightly frosted cards so text stays readable over the pattern */
+  /* Nearly solid cards so text pops over the pattern */
   body .bg-card {
-    background-color: color-mix(in oklab, var(--card) 88%, transparent);
+    background-color: color-mix(in oklab, var(--card) 96%, transparent);
+  }
+
+  /* Make headings and key text stand out from the backdrop */
+  body h1, body h2, body h3 {
+    text-shadow: 0 1px 0 color-mix(in oklab, var(--card) 90%, transparent);
+  }
+  body .text-muted-foreground {
+    color: color-mix(in oklab, var(--muted-foreground) 88%, var(--foreground));
   }
 }
 
