@@ -28,11 +28,11 @@ export const Route = createFileRoute("/")({
 });
 
 const PERKS = [
-  { icon: Truck, title: "Fast delivery", text: "Same-day within Kampala, 1–3 days countrywide." },
-  { icon: ShieldCheck, title: "Genuine goods", text: "Every piece is inspected before it ships." },
-  { icon: Sparkles, title: "Fresh arrivals", text: "New slots filled with new stock every week." },
-  { icon: Headphones, title: "Real support", text: "Talk to a human 8am–8pm, seven days a week." },
-];
+  { icon: Truck, title: "Fast delivery", text: "Same-day within Kampala, 1–3 days countrywide.", to: "/delivery" },
+  { icon: ShieldCheck, title: "Genuine goods", text: "Every piece is inspected before it ships.", to: "/about" },
+  { icon: Sparkles, title: "Fresh arrivals", text: "New slots filled with new stock every week.", to: "/browse" },
+  { icon: Headphones, title: "Real support", text: "Talk to a human 8am–8pm, seven days a week.", to: "/contact" },
+] as const;
 
 function HomePage() {
   const { products } = useShop();
@@ -75,11 +75,15 @@ function HomePage() {
 
       <section className="mx-auto grid max-w-7xl gap-4 px-4 py-10 sm:grid-cols-2 lg:grid-cols-4">
         {PERKS.map((perk) => (
-          <div key={perk.title} className="rounded-lg border border-border bg-card p-4">
+          <Link
+            key={perk.title}
+            to={perk.to}
+            className="rounded-lg border border-border bg-card p-4 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]"
+          >
             <perk.icon className="size-5 text-accent-foreground" />
             <h3 className="mt-3 text-sm font-semibold text-foreground">{perk.title}</h3>
             <p className="mt-1 text-sm text-muted-foreground">{perk.text}</p>
-          </div>
+          </Link>
         ))}
       </section>
 
