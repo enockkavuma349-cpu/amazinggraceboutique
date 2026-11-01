@@ -5,6 +5,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useShop } from "@/lib/shop-store";
 import { cn } from "@/lib/utils";
 import { formatUGX, CATEGORIES, type Category } from "@/lib/catalog";
+import { BrandLogo } from "@/components/shop/BrandLogo";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -123,11 +124,9 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
           </button>
 
           <Link to="/" className="flex items-center gap-2">
-            <span className="kitenge-pattern grid size-9 place-items-center rounded-full font-serif text-lg font-bold text-primary-foreground shadow-sm">
-              A
-            </span>
+            <BrandLogo className="size-12 shrink-0 drop-shadow-md" />
             <span className="leading-tight">
-              <span className="kitenge-text block font-serif text-lg font-bold">Amazing Grace</span>
+              <span className="kitenge-text kitenge-text-strong block font-serif text-xl font-bold">Amazing Grace</span>
               <span className="block text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground">Boutique</span>
             </span>
           </Link>
@@ -192,7 +191,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       <footer className="mt-16 border-t-4 border-transparent kitenge-edge kitenge-pattern-soft">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <h3 className="kitenge-text font-serif text-lg font-bold">Amazing Grace Boutique</h3>
+            <h3 className="kitenge-text kitenge-text-strong font-serif text-2xl font-bold">Amazing Grace Boutique</h3>
             <p className="mt-2 text-sm text-muted-foreground">
               Clothes, watches, perfumes and fine jewelry — curated with grace, delivered with care.
             </p>

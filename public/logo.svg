@@ -1,0 +1,53 @@
+    <svg viewBox="0 0 64 64" role="img" aria-label="Amazing Grace Boutique logo" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="bg" cx="50%" cy="40%" r="65%">
+          <stop offset="0%" stop-color="#2c7a57" />
+          <stop offset="100%" stop-color="#0f3b2a" />
+        </radialGradient>
+        <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#fff1a8" />
+          <stop offset="45%" stop-color="#f2c230" />
+          <stop offset="100%" stop-color="#b8780c" />
+        </linearGradient>
+        <linearGradient id="dress" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f0543c" />
+          <stop offset="100%" stop-color="#b3122f" />
+        </linearGradient>
+        <pattern id="print" width="6" height="6" patternUnits="userSpaceOnUse">
+          <circle cx="1.5" cy="1.5" r="0.9" fill="#f6cf3f" opacity="0.75" />
+          <circle cx="4.5" cy="4.5" r="0.7" fill="#ffffff" opacity="0.45" />
+        </pattern>
+      </defs>
+      <circle cx="32" cy="32" r="30.5" fill="url(#bg)" stroke="url(#gold)" stroke-width="2.5" />
+      <circle cx="32" cy="32" r="26.5" fill="none" stroke="url(#gold)" stroke-width="0.6" stroke-dasharray="1.2 1.6" />
+      <path d="M32 13.5c0-2 2.8-2 2.8-4S33.4 7 32 7.6" fill="none" stroke="url(#gold)" stroke-width="1.5" stroke-linecap="round" />
+      <path d="M32 13.5 21 18h22z" fill="none" stroke="url(#gold)" stroke-width="1.5" stroke-linejoin="round" />
+      <g>
+        <path
+          id="shape"
+          d="M27 18h2q3 3.5 6 0h2c.8 3.5.4 6-.4 8.5 4.5 5.5 8.5 12.5 10.4 21.5q-15 5-30 0c1.9-9 5.9-16 10.4-21.5-.8-2.5-1.2-5-.4-8.5z"
+          fill="url(#dress)"
+        />
+        <path
+          d="M27 18h2q3 3.5 6 0h2c.8 3.5.4 6-.4 8.5 4.5 5.5 8.5 12.5 10.4 21.5q-15 5-30 0c1.9-9 5.9-16 10.4-21.5-.8-2.5-1.2-5-.4-8.5z"
+          fill="url(#print)"
+        />
+        <rect x="26.6" y="25.6" width="10.8" height="2.4" rx="1.2" fill="url(#gold)" />
+      </g>
+      <text
+        x="32"
+        y="44"
+        text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-weight="700"
+        font-size="10.5"
+        fill="#fff8e6"
+        stroke="#7a0d1f"
+        stroke-width="0.4"
+        paint-order="stroke"
+      >
+        AGB
+      </text>
+      <path d="M49 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z" fill="url(#gold)" />
+      <path d="M15 22l.5 1.4 1.4.5-1.4.5-.5 1.4-.5-1.4-1.4-.5 1.4-.5z" fill="url(#gold)" />
+    </svg>
