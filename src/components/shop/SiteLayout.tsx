@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, ShoppingCart, ShieldCheck, MessageCircle, Search } from "lucide-react";
+import { Menu, ShoppingCart, ShieldCheck, MessageCircle, Search, User } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
 import * as React from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useShop } from "@/lib/shop-store";
@@ -102,6 +103,7 @@ function HeaderSearch() {
 
 export function SiteLayout({ children }: { children: React.ReactNode }) {
   const { cartCount, cartDetailed } = useShop();
+  const { user, isAdmin } = useAuth();
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -150,12 +152,21 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
 
 
           <div className="ml-auto flex items-center gap-2">
-            <Link
-              to="/admin"
-              className="hidden items-center gap-1.5 rounded-md border border-border px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground sm:flex"
-            >
-              <ShieldCheck className="size-4" /> Admin
-            </Link>
+            {isAdmin ? (
+              <Link
+                to="/admin"
+                className="hidden items-center gap-1.5 rounded-md border border-border px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground sm:flex"
+              >
+                <ShieldCheck className="size-4" /> Admin
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="hidden items-center gap-1.5 rounded-md border border-border px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground sm:flex"
+              >
+                <User className="size-4" /> {user ? "Account" : "Sign in"}
+              </Link>
+            )}
             <Link
               to="/cart"
               className="relative inline-flex items-center gap-2 rounded-md bg-accent px-3 py-2 text-sm font-semibold text-accent-foreground transition-opacity hover:opacity-90"
@@ -172,7 +183,12 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
         <div className={cn("border-t border-border lg:hidden", open ? "block" : "hidden")}>
           <nav className="mx-auto flex max-w-7xl flex-col px-4 py-2">
             <MobileSearch onDone={() => setOpen(false)} />
-            {[...NAV, { to: "/admin", label: "Admin Inventory" } as const].map((item) => (
+            {[
+              ...NAV,
+              isAdmin
+                ? ({ to: "/admin", label: "Admin Inventory" } as const)
+                : ({ to: "/login", label: user ? "My account" : "Sign in" } as const),
+            ].map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
@@ -212,7 +228,11 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
               <li><Link to="/about">About Us</Link></li>
               <li><Link to="/contact">Contact</Link></li>
               <li><Link to="/delivery">Delivery</Link></li>
-              <li><Link to="/admin">Admin Inventory</Link></li>
+              {isAdmin ? (
+                <li><Link to="/admin">Admin Inventory</Link></li>
+              ) : (
+                <li><Link to="/login">{user ? "My account" : "Sign in"}</Link></li>
+              )}
             </ul>
           </div>
           <div>
