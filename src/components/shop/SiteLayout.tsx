@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, ShoppingCart, ShieldCheck, MessageCircle, Search, User } from "lucide-react";
+import { Menu, ShoppingCart, ShieldCheck, MessageCircle, Search, User, Sun, Moon } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
+import { useTheme } from "@/hooks/use-theme";
 import * as React from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useShop } from "@/lib/shop-store";
@@ -249,6 +250,8 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
         </div>
       </footer>
 
+      <ThemeToggle />
+
       <a
         href={`https://wa.me/${WHATSAPP_NUMBER}?text=${buildWhatsAppMessage(cartDetailed)}`}
         target="_blank"
@@ -260,5 +263,21 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
         <span className="hidden sm:inline">Order on WhatsApp</span>
       </a>
     </div>
+  );
+}
+
+function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
+  return (
+    <button
+      type="button"
+      onClick={toggleTheme}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      className="fixed bottom-[4.5rem] right-4 z-50 flex size-11 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-lg shadow-black/20 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 sm:bottom-[5.5rem] sm:right-6"
+    >
+      {isDark ? <Sun className="size-5" /> : <Moon className="size-5" />}
+    </button>
   );
 }
