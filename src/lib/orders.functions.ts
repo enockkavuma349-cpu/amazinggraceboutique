@@ -1,3 +1,5 @@
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { isAdminEmail } from "./admin-email";
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
@@ -64,9 +66,10 @@ export const getOrder = createServerFn({ method: "GET" })
     return row;
   });
 
-export const listOrders = createServerFn({ method: "GET" }).handler(async () => {
-  const { isAdminUnlocked } = await import("./admin-session.server");
-  if (!(await isAdminUnlocked())) throw new Error("Forbidden");
+export const listOrders = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+  if (!isAdminEmail((context.claims as { email?: string }).email)) throw new Error("Forbidden");
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const { data, error } = await supabaseAdmin
     .from("orders")
