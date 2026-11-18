@@ -39,8 +39,12 @@ function HomePage() {
 
   return (
     <SiteLayout>
-      <section className="relative border-b border-border bg-cover bg-center bg-no-repeat kitenge-home-hero">
-        <div className="absolute inset-0 bg-foreground/75" aria-hidden="true" />
+      <section className="relative overflow-hidden border-b border-border">
+        <div
+          className="kitenge-home-hero absolute inset-0 bg-cover bg-center bg-no-repeat brightness-[1.35] saturate-[1.45]"
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-foreground/55" aria-hidden="true" />
         <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-6 px-4 py-10 sm:gap-8 sm:py-14 lg:grid-cols-2 lg:py-20">
           <div>
             <span className="inline-block rounded-full bg-hero-foreground/15 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-hero-foreground backdrop-blur-sm sm:text-xs">

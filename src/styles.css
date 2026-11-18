@@ -182,12 +182,12 @@
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background-color: color-mix(in oklab, var(--kitenge-marigold) 16%, var(--background));
+    background-color: color-mix(in oklab, var(--kitenge-marigold) 22%, var(--background));
     background-image:
-      radial-gradient(circle at 25% 25%, color-mix(in oklab, var(--kitenge-fuchsia) 18%, transparent) 0 9px, transparent 10px),
-      radial-gradient(circle at 75% 70%, color-mix(in oklab, var(--kitenge-teal) 18%, transparent) 0 7px, transparent 8px),
-      radial-gradient(circle at 55% 40%, color-mix(in oklab, var(--kitenge-leaf) 15%, transparent) 0 6px, transparent 7px),
-      repeating-linear-gradient(45deg, color-mix(in oklab, var(--kitenge-flame) 12%, transparent) 0 6px, transparent 6px 18px);
+      radial-gradient(circle at 25% 25%, color-mix(in oklab, var(--kitenge-fuchsia) 26%, transparent) 0 9px, transparent 10px),
+      radial-gradient(circle at 75% 70%, color-mix(in oklab, var(--kitenge-teal) 26%, transparent) 0 7px, transparent 8px),
+      radial-gradient(circle at 55% 40%, color-mix(in oklab, var(--kitenge-leaf) 22%, transparent) 0 6px, transparent 7px),
+      repeating-linear-gradient(45deg, color-mix(in oklab, var(--kitenge-flame) 18%, transparent) 0 6px, transparent 6px 18px);
     background-size: 76px 76px, 76px 76px, 76px 76px, 76px 76px;
   }
 
@@ -299,7 +299,7 @@
 }
 
 @utility kitenge-home-hero {
-  background-image: linear-gradient(135deg, color-mix(in oklab, var(--kitenge-indigo) 70%, transparent), color-mix(in oklab, var(--kitenge-flame) 45%, transparent)), url('/kitenge-bg.jpg');
+  background-image: linear-gradient(135deg, color-mix(in oklab, var(--kitenge-indigo) 45%, transparent), color-mix(in oklab, var(--kitenge-flame) 26%, transparent)), url('/kitenge-bg.jpg');
   background-blend-mode: color, normal;
 }
 
